@@ -1,9 +1,6 @@
 import React from 'react';
+import Rotas from './routes';
 
-function App() {
-  return (
-    <h1>Hello World</h1>
-  );
-}
+const  App: React.FC = () => <Rotas />
 
 export default App;
