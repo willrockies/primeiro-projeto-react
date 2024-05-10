@@ -6,8 +6,6 @@ const App: React.FC = () => (
   <>
     <Rotas />
     < GlobalStyle />
-
-
   </>
 )
 

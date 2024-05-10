@@ -1,5 +1,6 @@
 import React, { useState, FormEvent, useEffect } from "react";
 import { FiChevronRight } from "react-icons/fi";
+import { Link } from "react-router-dom";
 import api from "../../services/api";
 import logoImg from "../../assets/logo.svg"
 
@@ -21,15 +22,15 @@ const Dashboard: React.FC = () => {
         const storagedRepositories = localStorage.getItem(
             "@GithubExplorer:repositories",
         );
-    
-        if(storagedRepositories){
+
+        if (storagedRepositories) {
             return JSON.parse(storagedRepositories);
         }
         return [];
     });
 
-    
-    
+
+
     useEffect(() => {
         localStorage.setItem("@GithubExplorer:repositories", JSON.stringify(repositories)); // @GithubExplorer:repositories é para evitar conflitos caso outras aplicações esta rodando na mesma porta 
     }, [repositories]);
@@ -74,19 +75,34 @@ const Dashboard: React.FC = () => {
 
             <Repositories>
                 {repositories.map(repository => (
-                    <a key={repository.full_name} href="teste">
-                        <img src={repository.owner.avatar_url}
-                            alt={repository.owner.login} />
-                        <div>
-                            <strong>{repository.full_name}</strong>
-                            <p>{repository.description}</p>
-                        </div>
+                    //o anchora utilizado para redirecionar pagina é ruim, pois faz com que a pagina seja recarregada
+                // <a key = { repository.full_name } href= "teste">
+                //         <img src={repository.owner.avatar_url}
+                //             alt={repository.owner.login} />
+                //         <div>
+                //             <strong>{repository.full_name}</strong>
+                //             <p>{repository.description}</p>
+                //         </div>
 
-                        <FiChevronRight size={20} />
-                    </a>
+                //         <FiChevronRight size={20} />
+                //     </a>
+
+                    //é melhor utilizar o componente nativo do react Link
+            <Link key={repository.full_name} to={`repositories/${repository.full_name}`}>
+
+                <img src={repository.owner.avatar_url}
+                    alt={repository.owner.login} />
+                <div>
+                    <strong>{repository.full_name}</strong>
+                    <p>{repository.description}</p>
+                </div>
+
+                <FiChevronRight size={20} />
+            </Link>
+
 
                 ))}
-            </Repositories>
+            </Repositories >
         </>
 
     )
